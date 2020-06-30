@@ -90,30 +90,33 @@ var wild_Draw = UIImage(named: "Wild_Draw.png")
 /// قم بإنشاء الستركت هنا
 
 // struct ...
+import UIKit
 struct card{
-    var color: String
+    var color: String?
     var number: Int?
-    var actionCard : String
-    func imageName() -> String {
-        if number != nil{
-            return " \(color)_\(number!)"
-        }else{
-            return "\(color)_\(actionCard)"
-        }
-        }
-    }
+    var actionCard : String?
+   func imageName() -> String {
+   if number != nil && actionCard == nil {
+       return "\(color!)_\(number!).png"
+   }else if number == nil && actionCard != nil{
+       return "\(color!)_\(actionCard!).png"
+   }
+   return ""
+   }
+}
 var cards: [card] = []
-let colors = ["blue","yellow","red","green"]
-let actionCards = ["draw","skip","reverse"]
+let colors = ["Blue","Yellow","Red","Green"]
+let actionCards = ["Draw","Skip","Reverse"]
 
 for color in colors{
-    cards.append(card(color: color , number: 0, actionCard: ""))
+    cards.append(card(color: color , number: 0))
     for _ in 1...2 {
         for action in actionCards {
             cards.append(card(color: color, actionCard: action))
         }
-        for i in 1...9{
-            cards.append(card(color:color,number:i, actionCard: <#String#>))
+        for i in 1...2 {
+            for action in actionCards {
+            cards.append(card(color:color, actionCard: action))
         }
     }
 }
@@ -126,9 +129,11 @@ let randomCard = cards.randomElement()!
 let randomCardImage = UIImage(named: randomCard.imageName())
 
 
-let cardImages = cards.map{UIImage(named: $0.imageName())}
+        let cardImages = cards.map{UIImage(named: $0.imageName())}
 
+    
 randomCardImage
 #imageLiteral(resourceName: "Blue_Skip.png")
 
 cardImages
+}
